@@ -1,168 +1,938 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Moto & Coding - Home Super Mega</title>
-<style>
-/* ================= Reset e Base ================= */
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Courier New', monospace;}
-body{background:#0a0a0a;color:#fff;overflow-x:hidden;}
-a{color:inherit;text-decoration:none;}
-/* ================= Header ================= */
-header{
-  position:fixed;top:0;width:100%;background:#111;z-index:1000;
-  padding:15px 30px;border-bottom:3px solid #ff0040;
-  display:flex;justify-content:space-between;align-items:center;box-shadow:0 0 30px #ff0040;
-}
-header h1{color:#ff0040;font-size:2em;text-shadow:0 0 20px #ff0040;}
-nav a{margin-left:25px;color:#00fff0;font-weight:bold;transition:0.3s;text-shadow:0 0 8px #00fff0;}
-nav a:hover{color:#ffdd59;text-shadow:0 0 20px #ffdd59;transform:scale(1.1);}
-/* ================= Hero ================= */
-.hero{
-  position:relative;height:95vh;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center;
-}
-.parallax-bg{
-  position:absolute;width:220%;height:120%;top:-10%;left:-60%;
-  background:url('https://i.imgur.com/0b8Vd0l.jpg') no-repeat center/cover;
-  animation:slideBG 60s linear infinite;opacity:0.8;z-index:-1;
-}
-@keyframes slideBG{0%{transform:translateX(0);}100%{transform:translateX(60%);}}
-.hero-content{position:relative;z-index:10;color:#fff;animation:fadeIn 2s ease-out;}
-@keyframes fadeIn{0%{opacity:0;transform:translateY(-50px);}100%{opacity:1;transform:translateY(0);}}
-.hero h2{font-size:3.2em;color:#ffdd59;text-shadow:0 0 25px #ffdd59;}
-.hero p{font-size:1.4em;margin:20px 0;line-height:1.5;color:#ccc;text-shadow:0 0 8px #000;}
-.btn{display:inline-block;margin:10px;padding:15px 35px;border-radius:15px;background:#ff0040;color:#fff;font-weight:bold;box-shadow:0 0 20px #ff0040;transition:0.3s;text-shadow:0 0 10px #ff0040;}
-.btn:hover{transform:scale(1.15);box-shadow:0 0 40px #ffdd59;text-shadow:0 0 20px #ffdd59;}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moto Hub - Zona Interattiva</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-/* ================= Cards ================= */
-.about{padding:120px 20px 50px 20px;text-align:center;}
-.about h3{font-size:2.5em;margin-bottom:20px;color:#00fff0;text-shadow:0 0 20px #00fff0;}
-.about p{max-width:900px;margin:0 auto;font-size:1.3em;color:#ccc;line-height:1.6;text-shadow:0 0 5px #000;}
-.cards{display:flex;flex-wrap:wrap;justify-content:center;margin-top:60px;}
-.card{
-  background:#111;border:3px solid #ff0040;border-radius:25px;width:280px;margin:20px;padding:25px;
-  transition:0.5s;box-shadow:0 0 15px #ff0040;text-align:center;
-  transform-style: preserve-3d;
-}
-.card:hover{transform:rotateY(10deg) translateY(-15px);box-shadow:0 0 40px #ffdd59;}
-.card h3{color:#00fff0;margin-bottom:12px;text-shadow:0 0 12px #00fff0;}
-.card p{color:#ccc;margin-bottom:15px;text-shadow:0 0 6px #000;}
-.card a{display:inline-block;padding:12px 25px;border-radius:12px;background:#ff0040;color:#fff;box-shadow:0 0 12px #ff0040;transition:0.3s;text-shadow:0 0 8px #ff0040;}
-.card a:hover{transform:scale(1.1);box-shadow:0 0 35px #ffdd59;text-shadow:0 0 15px #ffdd59;}
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0f0f1e 100%);
+            color: #fff;
+            overflow-x: hidden;
+            position: relative;
+        }
 
-/* ================= Parallax Moto ================= */
-.moto-container{position:relative;width:100%;height:250px;margin-top:70px;overflow:hidden;}
-.moto{position:absolute;width:160px;height:80px;background:url('https://i.imgur.com/FgB1vbb.png') no-repeat center/contain;bottom:0;animation:moveMoto 5s linear infinite;}
-.moto:nth-child(2){animation-delay:2s;bottom:20px;width:120px;height:60px;}
-.moto:nth-child(3){animation-delay:4s;bottom:40px;width:100px;height:50px;}
-.moto:nth-child(4){animation-delay:6s;bottom:60px;width:90px;height:45px;}
-@keyframes moveMoto{0%{left:-20%;}100%{left:120%;}}
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
 
-/* ================= Scroll Animations ================= */
-@keyframes fadeUp{0%{opacity:0;transform:translateY(50px);}100%{opacity:1;transform:translateY(0);}}
-.fade-up{opacity:0;transition:1s ease-in;}
-.fade-up-visible{opacity:1;animation:fadeUp 1s forwards;}
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
 
-/* ================= Tooltip ================= */
-.tooltip{position:relative;display:inline-block;cursor:pointer;}
-.tooltip .tooltiptext{visibility:hidden;width:180px;background:#222;color:#fff;text-align:center;padding:6px 12px;border-radius:8px;position:absolute;z-index:10;bottom:125%;left:50%;transform:translateX(-50%);opacity:0;transition:opacity 0.3s;}
-.tooltip:hover .tooltiptext{visibility:visible;opacity:1;}
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
 
-/* ================= Footer ================= */
-footer{text-align:center;padding:35px;background:#111;border-top:3px solid #ff0040;box-shadow:0 0 25px #ff0040;}
-footer p{color:#ccc;}
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
-/* ================= Responsive ================= */
-@media(max-width:1000px){.cards{flex-direction:column;align-items:center;}.hero h2{font-size:2.4em;}}
-@media(max-width:600px){.hero h2{font-size:1.8em;}.btn{padding:12px 20px;}}
-</style>
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #ff6b00 0%, #ff0055 100%);
+            border-radius: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(255, 107, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        h1 {
+            font-size: 4em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(255,255,255,0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            font-size: 1.5em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 107, 0, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,107,0,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .game-card:hover::before {
+            left: 100%;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            border-color: #ff6b00;
+            box-shadow: 0 20px 40px rgba(255, 107, 0, 0.4);
+        }
+
+        .game-card h2 {
+            color: #ff6b00;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        .game-canvas {
+            width: 100%;
+            height: 300px;
+            background: #000;
+            border-radius: 10px;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        button {
+            background: linear-gradient(135deg, #ff6b00 0%, #ff0055 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.3);
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 107, 0, 0.5);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #ff6b00;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.7;
+        }
+
+        .controls {
+            background: rgba(255, 107, 0, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .speed-display {
+            font-size: 3em;
+            text-align: center;
+            color: #ff6b00;
+            font-weight: bold;
+            text-shadow: 0 0 20px rgba(255, 107, 0, 0.5);
+        }
+
+        .bike-viewer {
+            width: 100%;
+            height: 400px;
+            background: radial-gradient(circle, #1a1a2e 0%, #0a0a0a 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bike {
+            font-size: 80px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .bike-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .info-item {
+            background: rgba(255, 107, 0, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #ff6b00;
+        }
+
+        .info-label {
+            font-size: 0.9em;
+            opacity: 0.7;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #ff6b00;
+        }
+
+        .race-track {
+            position: relative;
+            height: 100%;
+            background: repeating-linear-gradient(
+                to bottom,
+                #333 0px,
+                #333 40px,
+                #555 40px,
+                #555 45px
+            );
+            overflow: hidden;
+        }
+
+        .player-bike, .obstacle {
+            position: absolute;
+            font-size: 40px;
+            transition: left 0.1s;
+        }
+
+        .player-bike {
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .obstacle {
+            font-size: 35px;
+        }
+
+        @keyframes slideDown {
+            from { top: -50px; }
+            to { top: 100%; }
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 107, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 107, 0, 0.2);
+            border-color: #ff6b00;
+            transform: translateX(10px);
+        }
+
+        .correct {
+            background: rgba(0, 255, 0, 0.2) !important;
+            border-color: #00ff00 !important;
+        }
+
+        .wrong {
+            background: rgba(255, 0, 0, 0.2) !important;
+            border-color: #ff0000 !important;
+        }
+
+        .timer {
+            font-size: 2em;
+            text-align: center;
+            margin: 20px 0;
+            color: #ff6b00;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b00, #ff0055);
+            transition: width 0.3s;
+            box-shadow: 0 0 10px rgba(255, 107, 0, 0.5);
+        }
+
+        .leaderboard {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            margin: 5px 0;
+            background: rgba(255, 107, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            animation: particleFade 2s forwards;
+        }
+
+        @keyframes particleFade {
+            to {
+                opacity: 0;
+                transform: translateY(-100px) scale(0);
+            }
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            margin-top: 60px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+        }
+    </style>
 </head>
 <body>
+    <div class="stars" id="stars"></div>
+    
+    <div class="container">
+        <header>
+            <h1>🏍️ MOTO HUB</h1>
+            <p class="subtitle">La tua zona interattiva definitiva per moto!</p>
+        </header>
 
-<header>
-<h1>Moto & Coding</h1>
-<nav>
-<a href="index.html">Home</a>
-<a href="aftermarket.html">Aftermarket Scooter</a>
-<a href="marketplace.html">Marketplace Informatica</a>
-<a href="game.html">Minigioco</a>
-</nav>
-</header>
+        <div class="games-grid">
+            <!-- Gioco 1: Corsa Infinita -->
+            <div class="game-card">
+                <h2>🏁 Corsa Infinita</h2>
+                <p>Schiva gli ostacoli e raggiungi la velocità massima!</p>
+                <div class="game-canvas race-track" id="raceGame">
+                    <div class="player-bike" id="playerBike">🏍️</div>
+                </div>
+                <div class="controls">
+                    <p>⬅️ Freccia Sinistra | Freccia Destra ➡️</p>
+                </div>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-value" id="raceScore">0</div>
+                        <div class="stat-label">Punti</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="raceSpeed">0</div>
+                        <div class="stat-label">km/h</div>
+                    </div>
+                </div>
+                <button onclick="startRace()">Inizia Corsa!</button>
+            </div>
 
-<section class="hero">
-<div class="parallax-bg"></div>
-<div class="hero-content">
-<h2>Benvenuto nel mondo dei motori e del coding</h2>
-<p>Uno studente di informatica appassionato di moto, pronto a condividere risorse, link e divertimento!</p>
-<a href="aftermarket.html" class="btn tooltip">Scopri ricambi
-<span class="tooltiptext">Vai alla sezione ricambi scooter</span>
-</a>
-<a href="game.html" class="btn tooltip">Gioca ora!
-<span class="tooltiptext">Divertiti con il minigioco integrato</span>
-</a>
-</div>
-</section>
+            <!-- Gioco 2: Quiz Moto -->
+            <div class="game-card">
+                <h2>🧠 Quiz Moto</h2>
+                <p>Quanto conosci il mondo delle moto?</p>
+                <div class="timer" id="quizTimer">30</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="quizProgress" style="width: 0%"></div>
+                </div>
+                <div id="quizContainer">
+                    <h3 id="quizQuestion">Premi "Inizia" per cominciare!</h3>
+                    <div id="quizOptions"></div>
+                </div>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-value" id="quizScore">0</div>
+                        <div class="stat-label">Corrette</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="quizTotal">0</div>
+                        <div class="stat-label">Totali</div>
+                    </div>
+                </div>
+                <button onclick="startQuiz()">Inizia Quiz!</button>
+            </div>
 
-<section class="about fade-up">
-<h3>Chi sono</h3>
-<p>Mi chiamo [TUO NOME], studio informatica e adoro creare progetti digitali legati al mondo dei motori. Amo sperimentare nuove tecnologie e condividere tutto ciò che imparo.</p>
+            <!-- Gioco 3: Accelerometro -->
+            <div class="game-card">
+                <h2>⚡ Accelerometro</h2>
+                <p>Tieni premuto per accelerare al massimo!</p>
+                <div class="game-canvas" style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                    <div class="speed-display" id="speedometer">0</div>
+                    <div style="font-size: 1.2em; margin-top: 10px;">km/h</div>
+                    <div style="margin-top: 30px; font-size: 60px;" id="accelBike">🏍️</div>
+                </div>
+                <div class="controls">
+                    <button id="accelButton" onmousedown="startAccel()" onmouseup="stopAccel()" ontouchstart="startAccel()" ontouchend="stopAccel()" style="width: 100%; padding: 30px; font-size: 1.5em;">
+                        TIENI PREMUTO PER ACCELERARE
+                    </button>
+                </div>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-value" id="maxSpeed">0</div>
+                        <div class="stat-label">Velocità Max</div>
+                    </div>
+                </div>
+            </div>
 
-<div class="cards">
-<div class="card fade-up">
-<h3>Progetto Moto 1</h3>
-<p>Web app che mostra ricambi e accessori per scooter.</p>
-<a href="#">Scopri</a>
-</div>
-<div class="card fade-up">
-<h3>Progetto Coding</h3>
-<p>Mini giochi, script JS e strumenti interattivi.</p>
-<a href="#">Scopri</a>
-</div>
-<div class="card fade-up">
-<h3>Progetto Moto 2</h3>
-<p>Simulatore moto con effetti visivi e neon glow.</p>
-<a href="#">Scopri</a>
-</div>
-<div class="card fade-up">
-<h3>Portfolio</h3>
-<p>Una raccolta dei miei progetti di informatica e motori.</p>
-<a href="#">Scopri</a>
-</div>
-</div>
+            <!-- Visualizzatore Moto 3D -->
+            <div class="game-card">
+                <h2>🔧 Garage Moto</h2>
+                <p>Esplora le caratteristiche delle moto leggendarie</p>
+                <div class="bike-viewer">
+                    <div class="bike" id="bikeDisplay">🏍️</div>
+                </div>
+                <div class="bike-info">
+                    <div class="info-item">
+                        <div class="info-label">Modello</div>
+                        <div class="info-value" id="bikeModel">Ducati Panigale V4</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Potenza</div>
+                        <div class="info-value" id="bikePower">214 CV</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Velocità Max</div>
+                        <div class="info-value" id="bikeMaxSpeed">305 km/h</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Cilindrata</div>
+                        <div class="info-value" id="bikeDisplacement">1103 cc</div>
+                    </div>
+                </div>
+                <div style="margin-top: 20px;">
+                    <button onclick="changeBike()">Cambia Moto</button>
+                </div>
+            </div>
 
-<div class="moto-container">
-<div class="moto"></div>
-<div class="moto"></div>
-<div class="moto"></div>
-<div class="moto"></div>
-</div>
-</section>
+            <!-- Classifica Globale -->
+            <div class="game-card">
+                <h2>🏆 Classifica Globale</h2>
+                <p>I migliori piloti del Moto Hub</p>
+                <div class="leaderboard">
+                    <div class="leaderboard-item">
+                        <span>🥇 Valentino</span>
+                        <span style="color: #ff6b00;">15,450 pts</span>
+                    </div>
+                    <div class="leaderboard-item">
+                        <span>🥈 Marc</span>
+                        <span style="color: #ff6b00;">14,890 pts</span>
+                    </div>
+                    <div class="leaderboard-item">
+                        <span>🥉 Jorge</span>
+                        <span style="color: #ff6b00;">13,200 pts</span>
+                    </div>
+                    <div class="leaderboard-item">
+                        <span>4️⃣ Pecco</span>
+                        <span style="color: #ff6b00;">12,750 pts</span>
+                    </div>
+                    <div class="leaderboard-item">
+                        <span>5️⃣ Enea</span>
+                        <span style="color: #ff6b00;">11,980 pts</span>
+                    </div>
+                </div>
+                <div class="stats" style="margin-top: 20px;">
+                    <div class="stat">
+                        <div class="stat-value" id="totalPlayers">1,247</div>
+                        <div class="stat-label">Piloti Totali</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="onlinePlayers">89</div>
+                        <div class="stat-label">Online Ora</div>
+                    </div>
+                </div>
+            </div>
 
-<footer>
-<p>© 2025 Moto & Coding | Creato con ❤️ da uno studente appassionato</p>
-</footer>
+            <!-- Sound Board -->
+            <div class="game-card">
+                <h2>🔊 Sound Board Moto</h2>
+                <p>Ascolta i suoni delle moto più iconiche</p>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin: 20px 0;">
+                    <button onclick="playSound(1)" style="padding: 20px;">
+                        🏍️ Partenza
+                    </button>
+                    <button onclick="playSound(2)" style="padding: 20px;">
+                        💨 Accelerazione
+                    </button>
+                    <button onclick="playSound(3)" style="padding: 20px;">
+                        🔥 Motore al Max
+                    </button>
+                    <button onclick="playSound(4)" style="padding: 20px;">
+                        🏁 Vittoria!
+                    </button>
+                </div>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-value" id="soundsPlayed">0</div>
+                        <div class="stat-label">Suoni Riprodotti</div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<script>
-// Animazioni scroll
-const faders = document.querySelectorAll('.fade-up');
-const appearOptions = { threshold: 0.3, rootMargin:"0px 0px -50px 0px" };
-const appearOnScroll = new IntersectionObserver(function(entries, observer){
-  entries.forEach(entry=>{
-    if(!entry.isIntersecting) return;
-    entry.target.classList.add('fade-up-visible');
-    observer.unobserve(entry.target);
-  });
-}, appearOptions);
-faders.forEach(fader=>appearOnScroll.observe(fader));
+        <footer>
+            <h3 style="color: #ff6b00; margin-bottom: 15px;">🏍️ MOTO HUB 2025</h3>
+            <p style="opacity: 0.7;">La piattaforma definitiva per gli amanti delle moto</p>
+            <p style="margin-top: 10px; opacity: 0.5; font-size: 0.9em;">
+                Adrenalina • Velocità • Passione
+            </p>
+        </footer>
+    </div>
 
-// Moto interattiva al click
-document.querySelectorAll('.moto').forEach(m=>{
-  m.addEventListener('click',()=>{
-    alert("Turbo attivato! 💨");
-  });
-});
-</script>
+    <script>
+        // Genera stelle animate nello sfondo
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = star.style.height = Math.random() * 3 + 'px';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+        createStars();
 
+        // Gioco Corsa Infinita
+        let raceActive = false;
+        let raceScore = 0;
+        let raceSpeed = 0;
+        let playerPos = 50;
+        let obstacles = [];
+        let raceInterval;
+
+        function startRace() {
+            if (raceActive) return;
+            raceActive = true;
+            raceScore = 0;
+            raceSpeed = 60;
+            obstacles = [];
+            document.getElementById('raceScore').textContent = raceScore;
+            document.getElementById('raceSpeed').textContent = raceSpeed;
+            
+            raceInterval = setInterval(updateRace, 50);
+            
+            // Genera ostacoli
+            setInterval(() => {
+                if (raceActive) createObstacle();
+            }, 1500);
+        }
+
+        function createObstacle() {
+            const obstacle = document.createElement('div');
+            obstacle.className = 'obstacle';
+            obstacle.textContent = ['🚗', '🚙', '🛻', '🚚'][Math.floor(Math.random() * 4)];
+            obstacle.style.left = Math.random() * 80 + 10 + '%';
+            obstacle.style.top = '-50px';
+            obstacle.style.animation = `slideDown ${3000 / raceSpeed * 60}ms linear`;
+            document.getElementById('raceGame').appendChild(obstacle);
+            obstacles.push(obstacle);
+            
+            setTimeout(() => {
+                if (obstacle.parentNode) obstacle.remove();
+            }, 3000);
+        }
+
+        function updateRace() {
+            raceScore += Math.floor(raceSpeed / 10);
+            raceSpeed = Math.min(300, raceSpeed + 0.5);
+            document.getElementById('raceScore').textContent = Math.floor(raceScore);
+            document.getElementById('raceSpeed').textContent = Math.floor(raceSpeed);
+            
+            // Controllo collisioni
+            const playerBike = document.getElementById('playerBike');
+            const playerRect = playerBike.getBoundingClientRect();
+            
+            obstacles.forEach(obs => {
+                if (!obs.parentNode) return;
+                const obsRect = obs.getBoundingClientRect();
+                if (!(playerRect.right < obsRect.left || 
+                      playerRect.left > obsRect.right || 
+                      playerRect.bottom < obsRect.top || 
+                      playerRect.top > obsRect.bottom)) {
+                    gameOver();
+                }
+            });
+        }
+
+        function gameOver() {
+            raceActive = false;
+            clearInterval(raceInterval);
+            obstacles.forEach(obs => obs.remove());
+            obstacles = [];
+            createParticles(window.innerWidth / 2, window.innerHeight / 2);
+            alert(`Game Over! Punteggio: ${Math.floor(raceScore)}`);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (!raceActive) return;
+            if (e.key === 'ArrowLeft') {
+                playerPos = Math.max(10, playerPos - 5);
+            } else if (e.key === 'ArrowRight') {
+                playerPos = Math.min(90, playerPos + 5);
+            }
+            document.getElementById('playerBike').style.left = playerPos + '%';
+        });
+
+        // Quiz Moto
+        const quizData = [
+            {q: "Qual è la casa motociclistica italiana più famosa?", a: ["Ducati", "Honda", "Yamaha", "Suzuki"], c: 0},
+            {q: "Quanti tempi ha un motore tradizionale?", a: ["2 tempi", "4 tempi", "6 tempi", "8 tempi"], c: 1},
+            {q: "Chi è il pilota con più titoli MotoGP?", a: ["Valentino Rossi", "Marc Márquez", "Jorge Lorenzo", "Casey Stoner"], c: 1},
+            {q: "Cosa significa ABS sulle moto?", a: ["Sistema Frenata Antibloccaggio", "Accelerazione Boost System", "Auto Balance System", "Advanced Bike Suspension"], c: 0},
+            {q: "Qual è la cilindrata massima in MotoGP?", a: ["600cc", "800cc", "1000cc", "1200cc"], c: 2},
+            {q: "La Kawasaki Ninja H2R può superare i:", a: ["250 km/h", "300 km/h", "350 km/h", "400 km/h"], c: 3},
+            {q: "Quale marca produce la famosa Hayabusa?", a: ["Suzuki", "Honda", "Yamaha", "Kawasaki"], c: 0},
+            {q: "Il primo Gran Premio motociclistico fu nel:", a: ["1949", "1959", "1969", "1979"], c: 0}
+        ];
+        
+        let quizActive = false;
+        let quizScore = 0;
+        let quizTotal = 0;
+        let currentQuestion = 0;
+        let quizTimer;
+
+        function startQuiz() {
+            if (quizActive) return;
+            quizActive = true;
+            quizScore = 0;
+            quizTotal = 0;
+            currentQuestion = 0;
+            showQuestion();
+        }
+
+        function showQuestion() {
+            if (currentQuestion >= quizData.length) {
+                quizActive = false;
+                clearInterval(quizTimer);
+                alert(`Quiz completato! Punteggio: ${quizScore}/${quizTotal}`);
+                return;
+            }
+            
+            const q = quizData[currentQuestion];
+            document.getElementById('quizQuestion').textContent = q.q;
+            
+            const optionsDiv = document.getElementById('quizOptions');
+            optionsDiv.innerHTML = '';
+            
+            q.a.forEach((option, i) => {
+                const opt = document.createElement('div');
+                opt.className = 'quiz-option';
+                opt.textContent = option;
+                opt.onclick = () => checkAnswer(i, opt);
+                optionsDiv.appendChild(opt);
+            });
+            
+            let timeLeft = 30;
+            document.getElementById('quizTimer').textContent = timeLeft;
+            clearInterval(quizTimer);
+            quizTimer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('quizTimer').textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(quizTimer);
+                    nextQuestion();
+                }
+            }, 1000);
+            
+            updateQuizProgress();
+        }
+
+        function checkAnswer(selected, element) {
+            const q = quizData[currentQuestion];
+            quizTotal++;
+            
+            if (selected === q.c) {
+                quizScore++;
+                element.classList.add('correct');
+                createParticles(element.getBoundingClientRect().left, element.getBoundingClientRect().top);
+            } else {
+                element.classList.add('wrong');
+                document.querySelectorAll('.quiz-option')[q.c].classList.add('correct');
+            }
+            
+            document.getElementById('quizScore').textContent = quizScore;
+            document.getElementById('quizTotal').textContent = quizTotal;
+            
+            setTimeout(nextQuestion, 1500);
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            showQuestion();
+        }
+
+        function updateQuizProgress() {
+            const progress = (currentQuestion / quizData.length) * 100;
+            document.getElementById('quizProgress').style.width = progress + '%';
+        }
+
+        // Accelerometro
+        let accelActive = false;
+        let currentSpeed = 0;
+        let maxSpeed = 0;
+        let accelInterval;
+
+        function startAccel() {
+            accelActive = true;
+            accelInterval = setInterval(() => {
+                if (accelActive) {
+                    currentSpeed = Math.min(350, currentSpeed + 5);
+                    document.getElementById('speedometer').textContent = Math.floor(currentSpeed);
+                    if (currentSpeed > maxSpeed) {
+                        maxSpeed = Math.floor(currentSpeed);
+                        document.getElementById('maxSpeed').textContent = maxSpeed;
+                    }
+                    
+                    // Animazione moto
+                    const bike = document.getElementById('accelBike');
+                    bike.style.transform = `scale(${1 + currentSpeed/350}) rotate(${currentSpeed/10}deg)`;
+                }
+            }, 50);
+        }
+
+        function stopAccel() {
+            accelActive = false;
+            clearInterval(accelInterval);
+            
+            let decelInterval = setInterval(() => {
+                currentSpeed = Math.max(0, currentSpeed - 10);
+                document.getElementById('speedometer').textContent = Math.floor(currentSpeed);
+                
+                const bike = document.getElementById('accelBike');
+                bike.style.transform = `scale(${1 + currentSpeed/350}) rotate(${currentSpeed/10}deg)`;
+                
+                if (currentSpeed <= 0) {
+                    clearInterval(decelInterval);
+                }
+            }, 50);
+        }
+
+        // Garage Moto
+        const bikes = [
+            {model: "Ducati Panigale V4", power: "214 CV", maxSpeed: "305 km/h", displacement: "1103 cc"},
+            {model: "Kawasaki Ninja H2R", power: "310 CV", maxSpeed: "400 km/h", displacement: "998 cc"},
+            {model: "BMW S1000RR", power: "205 CV", maxSpeed: "299 km/h", displacement: "999 cc"},
+            {model: "Yamaha YZF-R1", power: "200 CV", maxSpeed: "299 km/h", displacement: "998 cc"},
+            {model: "Honda CBR1000RR", power: "189 CV", maxSpeed: "299 km/h", displacement: "999 cc"},
+            {model: "Suzuki GSX-R1000", power: "202 CV", maxSpeed: "299 km/h", displacement: "999 cc"},
+            {model: "Aprilia RSV4", power: "217 CV", maxSpeed: "305 km/h", displacement: "1099 cc"},
+            {model: "MV Agusta F4", power: "212 CV", maxSpeed: "312 km/h", displacement: "998 cc"}
+        ];
+        
+        let currentBikeIndex = 0;
+
+        function changeBike() {
+            currentBikeIndex = (currentBikeIndex + 1) % bikes.length;
+            const bike = bikes[currentBikeIndex];
+            
+            document.getElementById('bikeModel').textContent = bike.model;
+            document.getElementById('bikePower').textContent = bike.power;
+            document.getElementById('bikeMaxSpeed').textContent = bike.maxSpeed;
+            document.getElementById('bikeDisplacement').textContent = bike.displacement;
+            
+            // Animazione cambio moto
+            const bikeDisplay = document.getElementById('bikeDisplay');
+            bikeDisplay.style.transform = 'scale(0) rotate(360deg)';
+            setTimeout(() => {
+                bikeDisplay.style.transition = 'transform 0.5s';
+                bikeDisplay.style.transform = 'scale(1) rotate(0deg)';
+            }, 100);
+            
+            createParticles(window.innerWidth / 2, window.innerHeight / 2);
+        }
+
+        // Sound Board
+        let soundsPlayed = 0;
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(type) {
+            soundsPlayed++;
+            document.getElementById('soundsPlayed').textContent = soundsPlayed;
+            
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            switch(type) {
+                case 1: // Partenza
+                    oscillator.frequency.setValueAtTime(100, audioContext.currentTime);
+                    oscillator.frequency.exponentialRampToValueAtTime(300, audioContext.currentTime + 0.5);
+                    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                    oscillator.start(audioContext.currentTime);
+                    oscillator.stop(audioContext.currentTime + 0.5);
+                    break;
+                case 2: // Accelerazione
+                    oscillator.frequency.setValueAtTime(200, audioContext.currentTime);
+                    oscillator.frequency.exponentialRampToValueAtTime(800, audioContext.currentTime + 1);
+                    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
+                    oscillator.start(audioContext.currentTime);
+                    oscillator.stop(audioContext.currentTime + 1);
+                    break;
+                case 3: // Motore al Max
+                    oscillator.frequency.setValueAtTime(500, audioContext.currentTime);
+                    oscillator.frequency.setValueAtTime(520, audioContext.currentTime + 0.05);
+                    oscillator.frequency.setValueAtTime(500, audioContext.currentTime + 0.1);
+                    gainNode.gain.setValueAtTime(0.4, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1.5);
+                    oscillator.start(audioContext.currentTime);
+                    oscillator.stop(audioContext.currentTime + 1.5);
+                    break;
+                case 4: // Vittoria
+                    for (let i = 0; i < 3; i++) {
+                        setTimeout(() => {
+                            const osc = audioContext.createOscillator();
+                            const gain = audioContext.createGain();
+                            osc.connect(gain);
+                            gain.connect(audioContext.destination);
+                            osc.frequency.setValueAtTime(400 + i * 200, audioContext.currentTime);
+                            gain.gain.setValueAtTime(0.2, audioContext.currentTime);
+                            gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                            osc.start(audioContext.currentTime);
+                            osc.stop(audioContext.currentTime + 0.3);
+                        }, i * 100);
+                    }
+                    break;
+            }
+            
+            createParticles(event.clientX, event.clientY);
+        }
+
+        // Sistema particelle
+        function createParticles(x, y) {
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.textContent = ['⭐', '✨', '💫', '🔥', '⚡'][Math.floor(Math.random() * 5)];
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                particle.style.fontSize = Math.random() * 20 + 10 + 'px';
+                
+                const angle = (Math.PI * 2 * i) / 15;
+                const velocity = Math.random() * 100 + 50;
+                particle.style.setProperty('--tx', Math.cos(angle) * velocity + 'px');
+                particle.style.setProperty('--ty', Math.sin(angle) * velocity + 'px');
+                
+                document.body.appendChild(particle);
+                
+                setTimeout(() => particle.remove(), 2000);
+            }
+        }
+
+        // Animazione contatori online
+        setInterval(() => {
+            const online = document.getElementById('onlinePlayers');
+            const current = parseInt(online.textContent);
+            const change = Math.floor(Math.random() * 5) - 2;
+            online.textContent = Math.max(50, Math.min(200, current + change));
+        }, 5000);
+
+        // Easter egg: scuoti per boost
+        let lastShake = Date.now();
+        window.addEventListener('devicemotion', (e) => {
+            const acceleration = e.accelerationIncludingGravity;
+            if (Math.abs(acceleration.x) > 15 || Math.abs(acceleration.y) > 15) {
+                if (Date.now() - lastShake > 1000) {
+                    lastShake = Date.now();
+                    if (raceActive) {
+                        raceSpeed += 30;
+                        createParticles(window.innerWidth / 2, window.innerHeight / 2);
+                    }
+                }
+            }
+        });
+
+        // Effetto parallasse su scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            document.getElementById('stars').style.transform = `translateY(${scrolled * 0.5}px)`;
+        });
+
+        // Inizializzazione
+        console.log('🏍️ MOTO HUB INIZIALIZZATO! Buon divertimento!');
+    </script>
 </body>
 </html>
