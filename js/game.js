@@ -1,42 +1,42 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-let moto = { x: 50, y: 350, width: 50, height: 30, speed: 5 };
+let moto = { x: 50, y: 350, w: 50, h: 30, speed: 6 };
 let obstacles = [];
 let score = 0;
 let gameOver = false;
 
 function spawnObstacle() {
-  const height = Math.random() * 50 + 20;
-  obstacles.push({ x: canvas.width, y: canvas.height - height, width: 20, height: height });
+  const h = Math.random()*60 + 20;
+  obstacles.push({x: canvas.width, y: canvas.height - h, w: 20, h: h});
 }
-setInterval(spawnObstacle, 2000);
+setInterval(spawnObstacle, 1500);
 
 function drawMoto() {
-  ctx.fillStyle = "red";
-  ctx.fillRect(moto.x, moto.y, moto.width, moto.height);
+  ctx.fillStyle = "#ff4d4d";
+  ctx.fillRect(moto.x, moto.y, moto.w, moto.h);
 }
 
 function drawObstacles() {
-  ctx.fillStyle = "black";
-  obstacles.forEach(ob => ctx.fillRect(ob.x, ob.y, ob.width, ob.height));
+  ctx.fillStyle = "#00ffff";
+  obstacles.forEach(o => ctx.fillRect(o.x, o.y, o.w, o.h));
 }
 
 function update() {
-  if (gameOver) return;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  if(gameOver) return;
+  ctx.clearRect(0,0,canvas.width,canvas.height);
 
-  obstacles.forEach(ob => ob.x -= 3);
-  obstacles = obstacles.filter(ob => ob.x + ob.width > 0);
+  obstacles.forEach(o => o.x -= 4);
+  obstacles = obstacles.filter(o => o.x+o.w>0);
 
   drawMoto();
   drawObstacles();
 
-  obstacles.forEach(ob => {
-    if (moto.x < ob.x + ob.width && moto.x + moto.width > ob.x &&
-        moto.y < ob.y + ob.height && moto.y + moto.height > ob.y) {
-      gameOver = true;
-      alert("Game Over! Score: " + score);
+  obstacles.forEach(o=>{
+    if(moto.x<moto.x+o.w && moto.x+moto.w>o.x &&
+       moto.y<moto.y+o.h && moto.y+moto.h>o.y){
+      gameOver=true;
+      alert("Game Over! Score: "+score);
     }
   });
 
@@ -44,12 +44,11 @@ function update() {
   requestAnimationFrame(update);
 }
 
-document.addEventListener("keydown", e => {
-  if (e.key === "ArrowUp") moto.y -= moto.speed;
-  if (e.key === "ArrowDown") moto.y += moto.speed;
-  if (moto.y < 0) moto.y = 0;
-  if (moto.y + moto.height > canvas.height) moto.y = canvas.height - moto.height;
+document.addEventListener("keydown", e=>{
+  if(e.key==="ArrowUp") moto.y-=moto.speed;
+  if(e.key==="ArrowDown") moto.y+=moto.speed;
+  if(moto.y<0) moto.y=0;
+  if(moto.y+moto.h>canvas.height) moto.y=canvas.height-moto.h;
 });
 
 update();
-
